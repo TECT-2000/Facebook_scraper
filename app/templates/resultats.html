@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+{% block chemin %}
+<a href="{{url_for('recherche')}}" class="breadcrumb-item">Recherche</a>
+<span class="breadcrumb-item active">Resultats</span>
+{%endblock%}
+
+{% block content %}
+<div class="card card-cascade narrower mb-5">
+    <div class="view view-cascade py-3 gradient-card-header info-color-dark d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 mx-3">Choisir un
+        {%if type=="page"%}
+        e page pour extraire ses publications :
+        {% else %}
+        compte pour extraire les posts de son profil
+        {%endif%}
+    </h5>
+    </div>
+    <div class="card-body card-body-cascade">
+        <!--<form method="post" action="{{url_for('resultat_recherche')}}" style="color: #757575;">-->
+
+        <div class="list-group">
+        <!--<ul class="list-group list-group-flush">-->
+
+            {%for elt in result %}
+      <a href="{{url_for('accueil',nom=elt['name'],type=type )}}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <img src="{{elt['image']}}" class="rounded-circle img-thumbnail img-fluid float-left d-inline-block"/> <!---->
+          <div class="d-flex w-100 justify-content-between d-inline-block">
+          <h5 class="mb-1">{{elt['name']}} -
+            {%if type=="page" %}
+                {{elt['nb_likes']}} personnes aiment ça {{elt['job']}}
+              {%endif%}
+          </h5>
+        </div>
+        <p class="mb-1">{{elt['url']}}</p>
+          {%if type=="personne" %}
+        <small class="text-muted">{{elt['job']}}</small>
+          {%endif%}
+      </a>
+            {%endfor%}
+</div>
+
+
+        <!--</form>-->
+    </div
+</div>
+
+
+{%endblock%}
+
+{% block graphe %}
+<script>
+$('#demo').pagination({
+    datasource:[1,2,3,4,5,6,7,8,9,10,14,15,18,21],
+    callback: function(data,pagination){
+        var html =template(data);
+        dataContainer.html(html);
+    }
+})
+</script>
+{%endblock%}
